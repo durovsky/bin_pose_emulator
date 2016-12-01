@@ -1,13 +1,13 @@
 # bin_pose_emulator
 
-Generator of random bin poses. It provides a ROS Service */bin_pose* which returns a combination of 3 Poses - **Grasp Point**, **Approach Point** and **Deapproach point** from predefined Virtual Bin. The Approach point is located at the normal vector given by Grasp Point orientation and the Deapproach point is located right above the grasp point.
+Generator of random bin poses. It provides */bin_pose* service which returns a combination of 3 Poses - **Grasp Point**, **Approach Point** and **Deapproach point**. The Grasp point is located at random pose within predefined Virtual Bin. The Approach point is located at the normal vector given by Grasp Point orientation and the Deapproach point is located right above the grasp point.
 
 ###Usage
 
 ```
 roslaunch bin_pose_emulator bin_pose_emulator
 ```
-call ros service with an Empty request:
+Call ros service with an Empty request:
 ```
 rosservice call /bin_pose
 ```
@@ -55,7 +55,7 @@ In order to simplify configuration and usage of this emulator, simple visualizat
 ###Config
 
 Virtual Bin is defined by **bin_center_** and **bin_size_** parameters, while allowed orientation is set by roll, pitch and yaw range. By default we assume that **tool0 link** of robot is aligned with vertical axis, pointing to the ground - RPY is [0,90,0]. **roll_range**, **pitch_range** and **yaw_range** extend this default pose orientation into allowed grasp cone. 
-**Approach distance** defines how far on normal vector given by Grasp Point orientation is Approach point located. The **deapproach_height** configures height of vertical movement when moving away from Grasp Point. 
+**Approach distance** defines how far on normal vector given by Grasp Point orientation is Approach point located. The **deapproach_height** configures height of vertical movement when moving away from Grasp Point. Example config file is located at config folder, Change launch file parameter **filepath** to adopt to your custom config file.
 
 Example Yaml config file: 
 ```
