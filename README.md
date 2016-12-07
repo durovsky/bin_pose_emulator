@@ -1,13 +1,13 @@
 # bin_pose_emulator
 
-Generator of random bin poses. It provides */bin_pose* service which returns a combination of 3 Poses - **Grasp Point**, **Approach Point** and **Deapproach point**. The Grasp point is located at random pose within predefined Virtual Bin. The Approach point is located at the normal vector given by Grasp Point orientation and the Deapproach point is located right above the grasp point.
+Generator of random bin poses. It provides */bin_pose* service which returns a combination of 3 Poses - **Grasp Point**, **Approach Point** and **Deapproach point**. The Grasp point is located at a random pose in predefined Virtual Bin. The Approach point is located at the normal vector given by Grasp Point orientation and the Deapproach point is located right above the Ggrasp point.
 
 ###Usage
 
 ```
 roslaunch bin_pose_emulator bin_pose_emulator
 ```
-Call ros service with an Empty request:
+Call ROS service with an Empty request:
 ```
 rosservice call /bin_pose
 ```
@@ -48,14 +48,14 @@ deapproach_pose:
 
 ###Visualization
 
-In order to simplify configuration and usage of this emulator, simple visualization is provided - **bin_pose_emulator** publishes two (*visualization_msgs/Marker*) messages to **bin_pose_visualization** topic. Use **Marker** view in RViz to see the pose of virtual bin and the location of current grasp point. Both Markers are published with *base_link* as reference frame. 
+In order to simplify configuration and usage of this emulator, basic visualization is available - **bin_pose_emulator** publishes two  messages to **bin_pose_visualization** topic. Use **Marker** view in RViz to visualize the pose of the virtual bin and the location of the current grasp point. Both Markers are published with *base_link* as a reference frame. 
 
 <img src="http://www.smartroboticsys.eu/wp-content/uploads/2016/12/bin_pose_emulator.jpg" width="750">
 
 ###Config
 
-Virtual Bin is defined by **bin_center_** and **bin_size_** parameters, while allowed orientation is set by roll, pitch and yaw range. By default we assume that **tool0 link** of robot is aligned with vertical axis, pointing to the ground - RPY is [0,90,0]. **roll_range**, **pitch_range** and **yaw_range** extend this default pose orientation into allowed grasp cone. 
-**Approach distance** defines how far on normal vector given by Grasp Point orientation is Approach point located. The **deapproach_height** configures height of vertical movement when moving away from Grasp Point. Example config file is located at config folder, Change launch file parameter **filepath** to adopt to your custom config file.
+Virtual Bin is defined by **bin_center_** and **bin_size_** parameters, while allowed orientation is set by roll, pitch and yaw range. By default we assume that **tool0 link** of robot is aligned with vertical axis, pointing to the ground - RPY is [0,90,0]. **roll_range**, **pitch_range** and **yaw_range** extend default pose orientation into allowed grasp cone. 
+**Approach distance** defines how far in direction of the normal vector given by the Grasp Point orientation is the Approach point. The **deapproach_height** configures height of vertical movement when moving away from the Grasp Point. Example config file is located at the onfig folder. Change launch file parameter **filepath** to adopt launch to your custom config file.
 
 Example Yaml config file: 
 ```
@@ -76,4 +76,4 @@ deapproach_height: 0.15
 ```
 
 ###Video
-Folowing [video](https://youtu.be/l4nY1mkcvU8) demonstrates capabilities of bin_pose_emulator 
+Folowing [video](https://youtu.be/l4nY1mkcvU8) demonstrates the capabilities of bin_pose_emulator.
