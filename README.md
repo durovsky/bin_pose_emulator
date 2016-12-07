@@ -1,6 +1,6 @@
 # bin_pose_emulator
 
-Generator of random bin poses. It provides */bin_pose* service which returns a combination of 3 Poses - **Grasp Point**, **Approach Point** and **Deapproach point**. The Grasp point is located at a random pose in predefined Virtual Bin. The Approach point is located at the normal vector given by Grasp Point orientation and the Deapproach point is located right above the Ggrasp point.
+Generator of random bin poses. It provides */bin_pose* service which returns a combination of 3 Poses - **Grasp Point**, **Approach Point** and **Deapproach point**. The Grasp point is located at a random pose in predefined Virtual Bin. The Approach point is located at the normal vector given by Grasp Point orientation and the Deapproach point is located right above the Grasp point.
 
 ###Usage
 
