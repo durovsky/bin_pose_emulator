@@ -36,10 +36,7 @@
 
 #include "bin_pose_emulator.h"
 
-Emulator::Emulator(ros::NodeHandle *nh, std::string filepath) :
-  roll_default(0),      // initial roll value for tool0 in vertical position
-  pitch_default(1.57),  // initial pitch value for tool0 in vertical position
-  yaw_default(0)        // initial yaw value for tool0 in vertical position
+Emulator::Emulator(ros::NodeHandle *nh, std::string filepath)
 {
   parseConfig(filepath);    // parse yaml config file
   srandom(time(NULL));      // initialize random generator
@@ -65,9 +62,9 @@ bool Emulator::callback(bin_pose_emulator::bin_pose::Request &req,
   grasp_pose.position.y = randGen(config.bin_center_y - config.bin_size_y/2,  config.bin_center_y + config.bin_size_y/2);
   grasp_pose.position.z = randGen(config.bin_center_z - config.bin_size_z/2,  config.bin_center_z + config.bin_size_z/2);
 
-  double grasp_roll   = randGen(roll_default  - config.roll_range/2,   roll_default  + config.roll_range/2);
-  double grasp_pitch  = randGen(pitch_default - config.pitch_range/2,  pitch_default + config.pitch_range/2);
-  double grasp_yaw    = randGen(yaw_default   - config.yaw_range/2,    yaw_default   + config.yaw_range/2);
+  double grasp_roll   = randGen(config.roll_default  - config.roll_range/2,   config.roll_default  + config.roll_range/2);
+  double grasp_pitch  = randGen(config.pitch_default - config.pitch_range/2,  config.pitch_default + config.pitch_range/2);
+  double grasp_yaw    = randGen(config.yaw_default   - config.yaw_range/2,    config.yaw_default   + config.yaw_range/2);
 
   tf::Quaternion grasp_orientation;
   grasp_orientation.setRPY(grasp_roll, grasp_pitch, grasp_yaw);
@@ -125,9 +122,13 @@ bool Emulator::parseConfig(std::string filepath)
     config.bin_size_y = config_file["bin_size_y"].as<float>();
     config.bin_size_z = config_file["bin_size_z"].as<float>();
 
+    config.roll_default  = config_file["roll_default"].as<float>();
+    config.pitch_default = config_file["pitch_default"].as<float>();
+    config.yaw_default   = config_file["yaw_default"].as<float>();
+
     config.roll_range  = config_file["roll_range"].as<float>();
     config.pitch_range = config_file["pitch_range"].as<float>();
-    config.yaw_range   = config_file["yaw_range"].as<float>();
+    config.yaw_range   = config_file["yaw_range"].as<float>();    
 
     config.approach_distance = config_file["approach_distance"].as<float>();
     config.deapproach_height  = config_file["deapproach_height"].as<float>();
