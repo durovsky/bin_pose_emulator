@@ -51,10 +51,15 @@ struct ConfigData
   double bin_size_y;
   double bin_size_z;
 
+  // Default tool point orientation
+  double roll_default;
+  double pitch_default;
+  double yaw_default;
+
   // Allowed orientation range
   double roll_range;
   double pitch_range;
-  double yaw_range;
+  double yaw_range;  
 
   // Planning constraints
   double approach_distance;
@@ -81,7 +86,4 @@ private:
   ros::Publisher marker_pub;
 
   ConfigData config;
-  double roll_default;
-  double pitch_default;
-  double yaw_default;
 };
