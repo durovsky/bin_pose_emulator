@@ -100,7 +100,8 @@ bool Emulator::callback(bin_pose_emulator::bin_pose::Request &req,
   res.deapproach_pose = deapproach_pose;
 
   visualize_bin();
-  visualize_pose(grasp_pose);
+  visualize_pose(grasp_pose, approach_pose);
+  broadcast_pose_tf(grasp_pose);
 }
 
 double Emulator::randGen(double fMin, double fMax)
@@ -169,7 +170,7 @@ void Emulator::visualize_bin(void)
   marker_pub.publish(marker);
 }
 
-void Emulator::visualize_pose(geometry_msgs::Pose grasp_pose)
+void Emulator::visualize_pose(geometry_msgs::Pose grasp_pose, geometry_msgs::Pose approach_pose)
 {
   uint32_t shape = visualization_msgs::Marker::ARROW;
   visualization_msgs::Marker marker;
@@ -182,30 +183,22 @@ void Emulator::visualize_pose(geometry_msgs::Pose grasp_pose)
   marker.type = shape;
   marker.action = visualization_msgs::Marker::ADD;
 
-  marker.pose.position.x = grasp_pose.position.x;
-  marker.pose.position.y = grasp_pose.position.y;
-  marker.pose.position.z = grasp_pose.position.z;
+  geometry_msgs::Point approach_point;
+  approach_point.x = approach_pose.position.x;
+  approach_point.y = approach_pose.position.y;
+  approach_point.z = approach_pose.position.z;
 
-  // Arrow pointing in approach direction
-  tf::Quaternion marker_orientation;
-  marker_orientation.setRPY(0,-M_PI/2,0);
+  geometry_msgs::Point grasp_point;
+  grasp_point.x = grasp_pose.position.x;
+  grasp_point.y = grasp_pose.position.y;
+  grasp_point.z = grasp_pose.position.z;
 
-  tf::Quaternion grasp_orientation;
-  grasp_orientation.setX(grasp_pose.orientation.x);
-  grasp_orientation.setY(grasp_pose.orientation.y);
-  grasp_orientation.setZ(grasp_pose.orientation.z);
-  grasp_orientation.setW(grasp_pose.orientation.w);
+  marker.points.push_back(approach_point);
+  marker.points.push_back(grasp_point);
 
-  marker_orientation = marker_orientation * grasp_orientation;
-
-  marker.pose.orientation.x = marker_orientation.getX();
-  marker.pose.orientation.y = marker_orientation.getY();
-  marker.pose.orientation.z = marker_orientation.getZ();
-  marker.pose.orientation.w = marker_orientation.getW();
-
-  marker.scale.x = 0.05;
-  marker.scale.y = 0.01;
-  marker.scale.z = 0.01;
+  marker.scale.x = 0.01;
+  marker.scale.y = 0.02;
+  marker.scale.z = 0.05;
 
   marker.color.r = 0.9f;
   marker.color.g = 0.9f;
@@ -214,6 +207,16 @@ void Emulator::visualize_pose(geometry_msgs::Pose grasp_pose)
 
   marker.lifetime = ros::Duration();
   marker_pub.publish(marker);
+}
+
+void Emulator::broadcast_pose_tf(geometry_msgs::Pose grasp_pose)
+{
+  static tf::TransformBroadcaster br;
+  tf::Transform transform;
+
+  transform.setOrigin( tf::Vector3(grasp_pose.position.x, grasp_pose.position.y, grasp_pose.position.z));
+  transform.setRotation(tf::Quaternion(grasp_pose.orientation.x, grasp_pose.orientation.y, grasp_pose.orientation.z, grasp_pose.orientation.w));
+  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "base_link", "current_goal"));
 }
 
 #endif  //BIN_POSE_EMULATOR_CPP

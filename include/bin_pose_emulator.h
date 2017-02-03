@@ -32,11 +32,15 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  *********************************************************************/
 
+#ifndef BIN_POSE_EMULATOR_H
+#define BIN_POSE_EMULATOR_H
+
 #include <ros/ros.h>
 #include <tf/tf.h>
 #include <yaml-cpp/yaml.h>
 #include <geometry_msgs/Pose.h>
 #include <visualization_msgs/Marker.h>
+#include <tf/transform_broadcaster.h>
 #include "bin_pose_emulator/bin_pose.h"
 
 struct ConfigData
@@ -81,9 +85,12 @@ private:
   bool parseConfig(std::string filepath);
 
   void visualize_bin(void);
-  void visualize_pose(geometry_msgs::Pose grasp_pose);
+  void visualize_pose(geometry_msgs::Pose grasp_pose, geometry_msgs::Pose approach_pose);
+  void broadcast_pose_tf(geometry_msgs::Pose grasp_pose);
 
   ros::Publisher marker_pub;
 
   ConfigData config;
 };
+
+#endif BIN_POSE_EMULATOR_H
