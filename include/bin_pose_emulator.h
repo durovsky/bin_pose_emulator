@@ -93,4 +93,4 @@ private:
   ConfigData config;
 };
 
-#endif BIN_POSE_EMULATOR_H
+#endif //BIN_POSE_EMULATOR_H
