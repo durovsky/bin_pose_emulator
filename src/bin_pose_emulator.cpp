@@ -79,7 +79,7 @@ bool Emulator::callback(bin_pose_emulator::bin_pose::Request &req,
   // Calculate Approach pose according to existing grasp pose
   geometry_msgs::Pose approach_pose;
 
-  tf::Vector3 vector(1,0,0);
+  tf::Vector3 vector(0,0,1);
   tf::Vector3 rotated_vector = tf::quatRotate(grasp_orientation, vector);
 
   approach_pose.position.x = grasp_pose.position.x - config.approach_distance * rotated_vector.getX();
@@ -185,10 +185,23 @@ void Emulator::visualize_pose(geometry_msgs::Pose grasp_pose)
   marker.pose.position.x = grasp_pose.position.x;
   marker.pose.position.y = grasp_pose.position.y;
   marker.pose.position.z = grasp_pose.position.z;
-  marker.pose.orientation.x = grasp_pose.orientation.x;
-  marker.pose.orientation.y = grasp_pose.orientation.y;
-  marker.pose.orientation.z = grasp_pose.orientation.z;
-  marker.pose.orientation.w = grasp_pose.orientation.w;
+
+  // Arrow pointing in approach direction
+  tf::Quaternion marker_orientation;
+  marker_orientation.setRPY(0,-M_PI/2,0);
+
+  tf::Quaternion grasp_orientation;
+  grasp_orientation.setX(grasp_pose.orientation.x);
+  grasp_orientation.setY(grasp_pose.orientation.y);
+  grasp_orientation.setZ(grasp_pose.orientation.z);
+  grasp_orientation.setW(grasp_pose.orientation.w);
+
+  marker_orientation = marker_orientation * grasp_orientation;
+
+  marker.pose.orientation.x = marker_orientation.getX();
+  marker.pose.orientation.y = marker_orientation.getY();
+  marker.pose.orientation.z = marker_orientation.getZ();
+  marker.pose.orientation.w = marker_orientation.getW();
 
   marker.scale.x = 0.05;
   marker.scale.y = 0.01;
