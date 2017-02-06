@@ -8,22 +8,17 @@ find_package(catkin REQUIRED
     tf
 )
 
+catkin_package()
+
 include_directories(
   ${catkin_INCLUDE_DIRS}
   ${PROJECT_SOURCE_DIR}/include/)
-
-catkin_package(
-  CATKIN_DEPENDS
-    roscpp
-    tf
-  INCLUDE_DIRS
-    include  
-)
 
 add_executable(
   ${PROJECT_NAME}
   src/main.cpp
   src/bin_pose_emulator.cpp)
+
 target_link_libraries(
   ${PROJECT_NAME}
   ${catkin_LIBRARIES}
