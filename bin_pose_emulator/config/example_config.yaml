@@ -7,7 +7,7 @@ bin_size_y: 0.5
 bin_size_z: 0.1
 
 roll_default: 0
-pitch_default: 1.57
+pitch_default: 3.14
 yaw_default: 0
 
 roll_range: 0.707
