@@ -34,7 +34,7 @@
 #ifndef BIN_POSE_EMULATOR_CPP
 #define BIN_POSE_EMULATOR_CPP
 
-#include "bin_pose_emulator.h"
+#include "bin_pose_emulator/bin_pose_emulator.h"
 
 Emulator::Emulator(ros::NodeHandle *nh, std::string filepath)
 {
@@ -51,8 +51,8 @@ Emulator::~Emulator()
 
 }
 
-bool Emulator::callback(bin_pose_emulator::bin_pose::Request &req,
-                        bin_pose_emulator::bin_pose::Response &res)
+bool Emulator::callback(bin_pose_msgs::bin_pose::Request &req,
+                        bin_pose_msgs::bin_pose::Response &res)
 {
 
   //-----------------------------------------------------------------------------------------

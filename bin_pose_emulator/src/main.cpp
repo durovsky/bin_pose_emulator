@@ -33,7 +33,7 @@
  *********************************************************************/
 
 #include <ros/ros.h>
-#include "bin_pose_emulator.h"
+#include "bin_pose_emulator/bin_pose_emulator.h"
 
 int main(int argc, char *argv[])
 {

@@ -41,7 +41,7 @@
 #include <geometry_msgs/Pose.h>
 #include <visualization_msgs/Marker.h>
 #include <tf/transform_broadcaster.h>
-#include "bin_pose_emulator/bin_pose.h"
+#include <bin_pose_msgs/bin_pose.h>
 
 struct ConfigData
 {
@@ -77,8 +77,8 @@ public:
   Emulator(ros::NodeHandle *nh, std::string filepath);
   ~Emulator();
 
-  bool callback(bin_pose_emulator::bin_pose::Request &req,
-                bin_pose_emulator::bin_pose::Response &res);
+  bool callback(bin_pose_msgs::bin_pose::Request &req,
+                bin_pose_msgs::bin_pose::Response &res);
 private:
 
   double randGen(double fMin, double fMax);
@@ -93,4 +93,4 @@ private:
   ConfigData config;
 };
 
-#endif BIN_POSE_EMULATOR_H
+#endif //BIN_POSE_EMULATOR_H
