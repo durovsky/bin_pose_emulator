@@ -35,7 +35,7 @@
 #include <ros/ros.h>
 #include "bin_pose_emulator/bin_pose_emulator.h"
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
   ros::init(argc, argv, "bin_pose_emulator");
   ros::NodeHandle nh;
@@ -47,8 +47,9 @@ int main(int argc, char *argv[])
   // Create emulator object
   Emulator emulator(&nh, filepath);
 
-  //Advertise service
-  ros::ServiceServer service = nh.advertiseService("bin_pose", &Emulator::callback, &emulator);
+  // Advertise service
+  ros::ServiceServer service =
+      nh.advertiseService("bin_pose", &Emulator::callback, &emulator);
 
   ros::spin();
 

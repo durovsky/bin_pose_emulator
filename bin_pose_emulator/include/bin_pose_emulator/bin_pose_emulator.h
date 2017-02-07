@@ -63,29 +63,29 @@ struct ConfigData
   // Allowed orientation range
   double roll_range;
   double pitch_range;
-  double yaw_range;  
+  double yaw_range;
 
   // Planning constraints
   double approach_distance;
   double deapproach_height;
 };
 
-
 class Emulator
 {
 public:
-  Emulator(ros::NodeHandle *nh, std::string filepath);
+  Emulator(ros::NodeHandle* nh, std::string filepath);
   ~Emulator();
 
-  bool callback(bin_pose_msgs::bin_pose::Request &req,
-                bin_pose_msgs::bin_pose::Response &res);
-private:
+  bool callback(bin_pose_msgs::bin_pose::Request& req,
+                bin_pose_msgs::bin_pose::Response& res);
 
+private:
   double randGen(double fMin, double fMax);
   bool parseConfig(std::string filepath);
 
   void visualize_bin(void);
-  void visualize_pose(geometry_msgs::Pose grasp_pose, geometry_msgs::Pose approach_pose);
+  void visualize_pose(geometry_msgs::Pose grasp_pose,
+                      geometry_msgs::Pose approach_pose);
   void broadcast_pose_tf(geometry_msgs::Pose grasp_pose);
 
   ros::Publisher marker_pub;
@@ -93,4 +93,4 @@ private:
   ConfigData config;
 };
 
-#endif //BIN_POSE_EMULATOR_H
+#endif // BIN_POSE_EMULATOR_H
