@@ -72,9 +72,9 @@ bool Emulator::callback(bin_pose_msgs::bin_pose::Request &req,
   grasp_pose.orientation.y = grasp_orientation.getY();
   grasp_pose.orientation.z = grasp_orientation.getZ();
   grasp_pose.orientation.w = grasp_orientation.getW();
-
+ 
   res.grasp_pose = grasp_pose;
-
+  
   //------------------------------------------------------------------------------------------
   // Calculate Approach pose according to existing grasp pose
   geometry_msgs::Pose approach_pose;
@@ -87,7 +87,6 @@ bool Emulator::callback(bin_pose_msgs::bin_pose::Request &req,
   approach_pose.position.z = grasp_pose.position.z - config.approach_distance * rotated_vector.getZ();
 
   approach_pose.orientation = grasp_pose.orientation;
-
   res.approach_pose = approach_pose;
 
   //-------------------------------------------------------------------------------------------
@@ -97,11 +96,11 @@ bool Emulator::callback(bin_pose_msgs::bin_pose::Request &req,
   deapproach_pose = grasp_pose;
   deapproach_pose.position.z = deapproach_pose.position.z + config.deapproach_height;
 
-  res.deapproach_pose = deapproach_pose;
-
   visualize_bin();
   visualize_pose(grasp_pose, approach_pose);
   broadcast_pose_tf(grasp_pose);
+  
+  res.deapproach_pose = deapproach_pose;   
 }
 
 double Emulator::randGen(double fMin, double fMax)
