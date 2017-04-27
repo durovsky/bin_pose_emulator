@@ -17,6 +17,8 @@ add_executable(
   ${PROJECT_NAME}
   src/main.cpp
   src/bin_pose_emulator.cpp)
+  
+add_dependencies(bin_pose_emulator ${catkin_EXPORTED_TARGETS})
 
 target_link_libraries(
   ${PROJECT_NAME}
