@@ -109,6 +109,8 @@ bool Emulator::callback(bin_pose_msgs::bin_pose::Request& req,
   broadcast_pose_tf(grasp_pose);
 
   res.deapproach_pose = deapproach_pose;
+  
+  return true;
 }
 
 double Emulator::randGen(double fMin, double fMax)
